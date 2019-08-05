@@ -85,10 +85,10 @@ DistanceNB = {SeaHbr: 0, WesPt: 5, PtNoPt: 20.6, BushPt: 29.9, PtPtrg: 43.9,
               AngPt: 638, MntPt: 643.5, Ktn: 648}
 
 # Get speed and time
-print('What is your Estimated Speed')
-EstimatedSpeed = float(input())
+print('What is your Estimated Speed in Knots?')
+EstimatedSpeed = float(input()) ### ADD VALIDATION
 print('What time will you be leaving today? (in HHMM format)')
-DepartureHHMM = input()
+DepartureHHMM = input()  ### ADD VALIDATION
 
 
 # Take the hours and minutes from the input and converts to int
@@ -100,20 +100,23 @@ EstimatedDeparture = datetime(today.year, today.month, today.day,
                               DepartureHour, DepartureMin)
 
 
-# Define a function that iterates through DistanceNB and calculates the eta
-# Then store that in a new dictionary called CalculatedETA
-# take s, speed as int and t, departure time as datetime object
-def getETA(s, t):
+"""Define a function that iterates through DistanceNB and calculates the eta
+Then store that in a new dictionary called CalculatedETA
+"""
+
+
+def get_eta(s, t):
+    #  s, is speed in knots as float or int, t is departure time as datetime
     calculated_eta = {}
     for k, v in DistanceNB.items():
-        travel_time = (v * 60) / s
-        eta = EstimatedDeparture + timedelta(minutes=travel_time)
-        calculated_eta[k] = eta
+        travel_time = (v * 60) / s  # Distance * 60 / speed = time in minutes
+        eta = t + timedelta(minutes=travel_time)
+        calculated_eta[k] = eta  # Add current key and new eta as key:value
     return calculated_eta
 
 
 # Run function and save as new dict
-CalculatedETA = getETA(EstimatedSpeed, EstimatedDeparture)
+CalculatedETA = get_eta(EstimatedSpeed, EstimatedDeparture)
 
 # Convert datetime objects to strings and print as separate lines
 for k, v in CalculatedETA.items():
