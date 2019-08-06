@@ -36,10 +36,36 @@ DistancesFromSEA = [0, 5, 20.6, 29.9, 43.9, 60.5, 71.2, 85, 98, 107, 126.2, 139,
 DistanceNB = dict(zip(WayPoints, DistancesFromSEA))
 
 # Get speed and time
-print('What is your Estimated Speed in Knots?')
-EstimatedSpeed = float(input())  ### ADD VALIDATION
-print('What time will you be leaving today? (in HHMM format)')
-DepartureHHMM = input()  ### ADD VALIDATION
+while True:  # Loop that restarts input if not valid
+    try:
+        print('What is your Estimated Speed in Knots? (##.# Format')
+        EstimatedSpeed = float(input())
+        if EstimatedSpeed != 0:  # 0 Speed will cause division errors later
+            break  # exits loop unless value error detected below
+        else:
+            print("You'll never make it to Alaska at that speed")
+            continue  # restarts loop
+    except ValueError:  # Conversion to float will fail if not numerical
+            print("Your estimated speed must be in numerical form")
+            continue
+
+
+while True:  # same test as above, except checking for length of 4 instead of 0
+    errormsg = "Your departure time must be four numerical digits. \nTwo " \
+               "digits for the hours and two for the minutes. Military " \
+               "style. \nPlease try again. "
+    try:
+        print('What time will you be leaving today? (in HHMM format)')
+        DepartureHHMM = input()
+        if len(DepartureHHMM) != 4:
+            print(errormsg)
+            continue
+        else:
+            DepartureHHMM = int(DepartureHHMM)  # Check for numerical input
+            DepartureHHMM = str(DepartureHHMM)  # Convert back so we can slice
+            break
+    except ValueError:
+        print(errormsg)
 
 # Take the hours and minutes from the input and converts to int
 DepartureHour = int(DepartureHHMM[:2])
