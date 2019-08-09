@@ -46,8 +46,8 @@ while True:  # Loop that restarts input if not valid
             print("You'll never make it to Alaska at that speed")
             continue  # restarts loop
     except ValueError:  # Conversion to float will fail if not numerical
-            print("Your estimated speed must be in numerical form")
-            continue
+        print("Your estimated speed must be in numerical form")
+        continue
 
 
 while True:  # same test as above, except checking for length of 4 instead of 0
@@ -94,4 +94,4 @@ CalculatedETA = get_eta(EstimatedSpeed, EstimatedDeparture)
 
 # Convert datetime objects to strings and print as separate lines
 for k, v in CalculatedETA.items():
-    print('You will arrive at ' + k + ' on ' + str(v))
+    print('You will arrive at ' + k + ' on ' + v.strftime("%A, at %H:%M"))
