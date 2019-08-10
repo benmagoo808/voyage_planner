@@ -20,6 +20,24 @@ for k, v in DistanceNB.items():  # loop through and open corresponding table
         current_chart.append(row)
 
 for i in current_chart:
-   i[0] = datetime.strptime(i[0], '%Y-%m-%d %H:%M')  # Convert string->datetime
+    i[0] = datetime.strptime(i[0], '%Y-%m-%d %H:%M')  # Convert string->datetime
+    if i[2] == '-':  # convert dashes for slack to 0 speed
+        i[2] = 0
+    i[2] = float(i[2])  # convert strings to floats for math
 
+print(current_chart)
+# Compare the eta to the current chart and get closest slack and max, max value
 
+for i in range(len(current_chart)):  # iterate through list using index
+    if eta > current_chart[i][0]:  # if eta is past table entry, continue
+        continue
+    elif eta == current_chart[i][0]:  # if eta is same, current is as listed
+        current = current_chart[i[1:]]
+    elif eta < current_chart[i][0]:  # if eta is less than get previous and next
+        upcoming = current_chart[i]
+        i -= 1
+        previous = current_chart[i]
+        break
+
+print(previous)
+print(upcoming)
