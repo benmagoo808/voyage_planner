@@ -6,12 +6,60 @@ the current speed and direction from those values for a given eta
 """
 
 from datetime import datetime, timedelta
-
 import csv
+
 
 eta = datetime(2019,8,10,12,00)  # Define an eta in format we are using
 DistanceNB = {'West Point': eta}  # dummy dict that will be our eta dict
-current_chart = []
+current_chart = []  # list we will fill from the .csv file
+upcoming = [] # our future list with details about next current stage
+previous = [] # our future list with details about the previous current stage
+
+# Create a table of factors for current at any time from the currents book
+# Every nested list is a row, same index in each row is a column
+tableA = [
+    [None,timedelta(hours=1,minutes=20),timedelta(hours=1,minutes=40),
+     timedelta(hours=2),timedelta(hours=2,minutes=20),
+     timedelta(hours=2,minutes=40),timedelta(hours=3),
+     timedelta(hours=3,minutes=20),timedelta(hours=3,minutes=40),
+     timedelta(hours=4),timedelta(hours=4,minutes=20),
+     timedelta(hours=4,minutes=40),timedelta(hours=5),
+     timedelta(hours=5,minutes=20),timedelta(hours=5,minutes=40)],
+    [timedelta(minutes=20),0.4,0.3,0.3,0.2,0.2,0.2,0.2,0.1,0.1,0.1,0.1,0.1,
+     0.1,0.1],
+    [timedelta(minutes=40),0.7,0.6,0.5,0.4,0.4,0.3,0.3,0.3,0.3,0.2,0.2,0.2,
+     0.2,0.2],
+    [timedelta(hours=1),0.9,0.8,0.7,0.6,0.6,0.5,0.5,0.4,0.4,0.4,0.3,0.3,0.3,
+     0.3],
+    [timedelta(hours=1,minutes=20),1.0,1.0,0.9,0.8,0.7,0.6,0.6,0.5,0.5,0.5,
+     0.4,0.4,0.4,0.4],
+    [timedelta(hours=1,minutes=40),None, 1.0,1.0,0.9,0.8,0.8,0.7,0.7,0.6,0.6,
+     0.5,0.5,0.5,0.4,0.4],
+    [timedelta(hours=2),None,None,1.0,1.0,0.9,0.9,0.8,0.8,0.7,0.7,0.6,0.6,
+     0.6,0.5],
+    [timedelta(hours=2,minutes=20),None,None,None,1.0,1.0,0.9,0.9,0.8,0.8,
+     0.7,0.7,0.7,0.6,0.6,],
+    [timedelta(hours=2,minutes=40),None,None,None,None,1.0,1.0,1.0,0.9,0.9,
+     0.8,0.8,0.7,0.7,0.7],
+    [timedelta(hours=3),None,None,None,None,None,1.0,1.0,1.0,0.9,0.9,0.8,0.8,
+     0.8,0.7],
+    [timedelta(hours=3,minutes=20),None,None,None,None,None,None,1.0,1.0,1.0,
+     0.9,0.9,0.9,0.8,0.8],
+    [timedelta(hours=3,minutes=40),None,None,None,None,None,None,None,1.0,
+     1.0,1.0,0.9,0.9,0.9,0.9],
+    [timedelta(hours=4),None,None,None,None,None,None,None,None,1.0,1.0,1.0,
+     1.0,0.9,0.9],
+    [timedelta(hours=4,minutes=20),None,None,None,None,None,None,None,None,
+    None,1.0,1.0,1.0,1.0,0.9],
+    [timedelta(hours=4,minutes=40),None,None,None,None,None,None,None,None,
+     None,None,1.0,1.0,1.0,1.0],
+    [timedelta(hours=5),None,None,None,None,None,None,None,None,None,None,
+     None,1.0,1.0,1.0],
+    [timedelta(hours=5,minutes=20),None,None,None,None,None,None,None,None,
+     None,None,None,None,1.0,1.0],
+    [timedelta(hours=5,minutes=40),None,None,None,None,None,None,None,None,
+     None,None,None,None,None,1.0]
+          ]
 
 
 for k, v in DistanceNB.items():  # loop through and open corresponding table
@@ -19,15 +67,15 @@ for k, v in DistanceNB.items():  # loop through and open corresponding table
     for row in rdr:  # convert rows to list items
         current_chart.append(row)
 
+
 for i in current_chart:
     i[0] = datetime.strptime(i[0], '%Y-%m-%d %H:%M')  # Convert string->datetime
     if i[2] == '-':  # convert dashes for slack to 0 speed
         i[2] = 0
     i[2] = float(i[2])  # convert strings to floats for math
 
-print(current_chart)
-# Compare the eta to the current chart and get closest slack and max, max value
 
+# Compare the eta to the current chart and get closest slack and max, max value
 for i in range(len(current_chart)):  # iterate through list using index
     if eta > current_chart[i][0]:  # if eta is past table entry, continue
         continue
@@ -39,5 +87,8 @@ for i in range(len(current_chart)):  # iterate through list using index
         previous = current_chart[i]
         break
 
-print(previous)
-print(upcoming)
+
+# Calculate the current at the eta using the appropriate table
+interval = upcoming[0] - previous[0]
+for i in range(len(tableA[0])):  # for every entry in the first row, intervals
+    if interval
