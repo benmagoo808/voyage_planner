@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 import csv
 
 
-eta = datetime(2019,8,10,12,00)  # Define an eta in format we are using
+eta = datetime(2019,8,30,12,00)  # Define an eta in format we are using
 DistanceNB = {'West Point': eta}  # dummy dict that will be our eta dict
 current_chart = []  # list we will fill from the .csv file
 upcoming = [] # our future list with details about next current stage
@@ -97,25 +97,48 @@ else:
     timeToSlack = (upcoming[0] - eta)
 
 
-for i in range(len(tableA[0])):  # for every entry in the first row...
+for i in range(len(tableA[0])):  # find closest column
     if tableA[0][i] is None:  # skip the none values
         continue
     elif interval < tableA[0][i] and i == timedelta(hours=1,minutes=20):
         column = 1  # If it's less than column [1] it's closest to column [1]
+        break
     elif interval < tableA[0][i]: # Find the nearest interval
         x = tableA[0][i]  # by comparing with first higher value
-        print(x)
         i -= 1
         if (interval - tableA[0][i]) < (x - interval):  # and first lower value
-            print(tableA[0][i])
             column = int(i)
             break
         else:
             i += 1
             column = int(i)  # column represents the index we need for step 2
             break
-print(interval)
-print(tableA[0][column])
 
+for i in range(len(tableA)):  # Use same approach to find the factor by finding
+# closest row
+    if tableA[i][0] is None:
+        continue
+    elif timeToSlack < tableA[i][0] and i == timedelta(minutes=20):
+        factor = tableA[i][column]  # if less than row 1 it's row 1
+        break
+    elif timeToSlack < tableA[i][0]:  # compare next highest
+        y = tableA[i][0]
+        i -= 1
+        if (timeToSlack - tableA[i][0]) < (y - timeToSlack):  # with next lower
+            i = int(i)
+            factor = tableA[i][column]
+            break
+        else:
+            i += 1
+            factor = tableA[i][column]  # factor is intersection of row/column
+            break
 
+if previous[1] == 'slack':          # apply factor to the closest max current
+    presentCurrent = (upcoming[2] * factor)
+    stage = upcoming[1]
+else:
+    presentCurrent = (previous[2] * factor)
+    stage = previous[1]
 
+print('The current at West Point is %s knots%s at your ETA of %s' %
+      (str(presentCurrent), stage, str(eta)))
