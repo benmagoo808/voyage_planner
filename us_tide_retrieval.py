@@ -14,8 +14,8 @@ from datetime import datetime, timedelta
 # Define our variables for this test script
 station_id = '9447130'
 waypoint = 'Seattle'
-eta = '20180808'
-eta2 = '20180810'
+eta = '20180808 12:00'
+eta2 = '20180808 13:00'
 
 
 url = 'https://tidesandcurrents.noaa.gov/api/datagetter'
