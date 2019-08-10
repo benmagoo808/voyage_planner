@@ -15,6 +15,7 @@ current_chart = []  # list we will fill from the .csv file
 upcoming = [] # our future list with details about next current stage
 previous = [] # our future list with details about the previous current stage
 
+
 # Create a table of factors for current at any time from the currents book
 # Every nested list is a row, same index in each row is a column
 tableA = [
@@ -75,7 +76,7 @@ for i in current_chart:
     i[2] = float(i[2])  # convert strings to floats for math
 
 
-# Compare the eta to the current chart and get closest slack and max, max value
+# Compare the eta to find time of closest max and slack, speed of max current
 for i in range(len(current_chart)):  # iterate through list using index
     if eta > current_chart[i][0]:  # if eta is past table entry, continue
         continue
@@ -89,6 +90,32 @@ for i in range(len(current_chart)):  # iterate through list using index
 
 
 # Calculate the current at the eta using the appropriate table
-interval = upcoming[0] - previous[0]
-for i in range(len(tableA[0])):  # for every entry in the first row, intervals
-    if interval
+interval = upcoming[0] - previous[0]  # find time difference between stages
+if previous[2] == 0:
+    timeToSlack = (eta - previous[0])  # find time difference between slack/eta
+else:
+    timeToSlack = (upcoming[0] - eta)
+
+
+for i in range(len(tableA[0])):  # for every entry in the first row...
+    if tableA[0][i] is None:  # skip the none values
+        continue
+    elif interval < tableA[0][i] and i == timedelta(hours=1,minutes=20):
+        column = 1  # If it's less than column [1] it's closest to column [1]
+    elif interval < tableA[0][i]: # Find the nearest interval
+        x = tableA[0][i]  # by comparing with first higher value
+        print(x)
+        i -= 1
+        if (interval - tableA[0][i]) < (x - interval):  # and first lower value
+            print(tableA[0][i])
+            column = int(i)
+            break
+        else:
+            i += 1
+            column = int(i)  # column represents the index we need for step 2
+            break
+print(interval)
+print(tableA[0][column])
+
+
+
