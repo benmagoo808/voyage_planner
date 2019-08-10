@@ -11,17 +11,15 @@ import csv
 
 eta = datetime(2019,8,10,12,00)  # Define an eta in format we are using
 DistanceNB = {'West Point': eta}  # dummy dict that will be our eta dict
-current_chart = {}
+current_chart = []
 
 
 for k, v in DistanceNB.items():  # loop through and open corresponding table
     rdr = csv.reader(open('./current_tables/%s_%s.csv' % (k, v.year)))
-    for row in rdr:  # convert rows to dictionary items
-        current_chart[row[0]] = row[1:]
+    for row in rdr:  # convert rows to list items
+        current_chart.append(row)
+
+for i in current_chart:
+   i[0] = datetime.strptime(i[0], '%Y-%m-%d %H:%M')  # Convert string->datetime
 
 
-for k in current_chart.keys():
-    k = datetime(int(k[:4]), int(k[5:7]), int(k[8:10]), int(k[11:13]),
-                 int(k[14:]))
-
-datetime.
