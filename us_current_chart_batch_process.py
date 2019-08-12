@@ -8,11 +8,18 @@ and remove the first row which is just titles for the values
 """
 
 import csv
-import sys
+import os
+import re
 
 
-rdr = csv.reader(open('./current_tables/PUG1515_15_Annual_2019.csv', 'rb'))
-writer = csv.writer('./current_tables/PUG1515_2019.csv', 'wb')
+os.chdir('./current_tables')
+for f in os.listdir('.'):
+    if not f.startswith('.'):
+        stationID = f[:7]
+        year = f[-8:]
+        path = os.path.split(f)
+        os.rename(f, stationID + '_' + year)
 
 
-if rdr
+#rdr = csv.reader(open('./current_tables/PUG1515_15_Annual_2019.csv', 'rb'))
+#writer = csv.writer('./current_tables/PUG1515_2019.csv', 'wb')
