@@ -10,7 +10,7 @@ import csv
 
 
 eta = datetime(2019, 5, 26, 8, 36)  # Define an eta in format we are using
-DistanceNB = {'West Point': eta}  # dummy dict that will be our eta dict
+DistanceNB = {'PUG1515': eta}  # dummy dict that will be our eta dict
 current_chart = []  # list we will fill from the .csv file
 current = []  # our future list with actual current speed
 upcoming = []  # our future list with details about next current stage
