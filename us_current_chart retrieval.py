@@ -19,7 +19,7 @@ previous = []  # our future list with details about the previous current stage
 
 # Create a table of factors for current at any time from nearest max and slack
 # Every nested tuple is a row, same index in each row is a column
-tableA = (
+table_a = (
     (None, timedelta(hours=1, minutes=20), timedelta(hours=1, minutes=40),
      timedelta(hours=2), timedelta(hours=2, minutes=20),
      timedelta(hours=2, minutes=40), timedelta(hours=3),
@@ -63,6 +63,9 @@ tableA = (
      None, None, None, None, None, None, 1.0)
 )
 
+current_station_id = (None, 'PUG1515', 'PUG1606', 'PUG1617', 'PUG1708',
+                      'PUG17', 'PUG1714', 'PCT1466', 'PCT2011')
+
 
 for k, v in DistanceNB.items():  # loop through and open corresponding table
     rdr = csv.reader(open('./current_tables/%s_%s.csv' % (k, v.year)))
@@ -99,15 +102,15 @@ else:                                 # otherwise upcoming is slack
     timeToSlack = (upcoming[0] - eta)  # reverse order to get positive number
 
 
-for i in range(len(tableA[0])):  # find closest column
-    if tableA[0][i] is None:  # skip the none values
+for i in range(len(table_a[0])):  # find closest column
+    if table_a[0][i] is None:  # skip the none values
         continue
-    elif interval < tableA[0][i] and i == tableA[0][1]:
+    elif interval < table_a[0][i] and i == table_a[0][1]:
         column = 1  # If it's less than column [1] it's closest to column [1]
         break
-    elif interval < tableA[0][i]:  # Find the first higher value
+    elif interval < table_a[0][i]:  # Find the first higher value
         x = int(i) - 1             # and index of lower value
-        if abs(interval - tableA[0][i]) < abs(interval - tableA[0][x]):
+        if abs(interval - table_a[0][i]) < abs(interval - table_a[0][x]):
             column = int(i)  # find closest to interval, set column as row index
             break
         else:
@@ -116,21 +119,21 @@ for i in range(len(tableA[0])):  # find closest column
 
 
 # Use same approach to find the factor by finding closest row
-for i in range(len(tableA)):
-    if tableA[i][0] is None:
+for i in range(len(table_a)):
+    if table_a[i][0] is None:
         continue
-    elif timeToSlack < tableA[i][0] and i == tableA[1][0]:
-        factor = tableA[i][column]  # if less than row 1 it's row 1
+    elif timeToSlack < table_a[i][0] and i == table_a[1][0]:
+        factor = table_a[i][column]  # if less than row 1 it's row 1
         break
-    elif timeToSlack < tableA[i][0]:  # compare as before
+    elif timeToSlack < table_a[i][0]:  # compare as before
         y = int(i) - 1
-        if abs(timeToSlack - tableA[i][0]) < abs(timeToSlack - tableA[y][0]):
+        if abs(timeToSlack - table_a[i][0]) < abs(timeToSlack - table_a[y][0]):
             r = int(i)
-            factor = tableA[r][column]
+            factor = table_a[r][column]
             break
         else:
             r = int(y)
-            factor = tableA[r][column]  # factor is intersection of row/column
+            factor = table_a[r][column]  # factor is intersection of row/column
             break
 
 

@@ -5,6 +5,8 @@ tide, current, and weather information, based on the users input.
 
 
 from datetime import datetime, timedelta
+from vp_data import wa_dist, wa_names
+from way_points import WayPoint, Voyage
 
 
 def get_speed():
@@ -56,13 +58,19 @@ def get_departure():
     return etd
 
 
-def get_eta(s, d, distance):
-    travel_time = (distance * 60) / s
-    eta = d + timedelta(minutes=travel_time)
-    print(eta)
-    return eta
-
-
 est_speed = get_speed()
 est_departure = get_departure()
-arrival = get_eta(est_speed, est_departure, 98)
+
+PresentVoyage = Voyage(departure=est_departure, cruise=est_speed)
+
+waypoints = {name: WayPoint(name) for name in wa_names}
+
+count = 0
+for v in waypoints.values():
+    v.distance = wa_dist[count]
+    count += 1
+
+count = 0
+for v in waypoints.values():
+    v.station_id = current_station_id[count]
+
