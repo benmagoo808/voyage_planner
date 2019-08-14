@@ -81,4 +81,4 @@ wa_names = ['Seattle', 'West Point', 'Point No Point', 'Bush Point',
 wa_dist = dist_from_sea[:8]
 
 current_station_id = (None, 'PUG1515', 'PUG1606', 'PUG1617', 'PUG1708',
-                      'PUG17', 'PUG1714', 'PCT1466', 'PCT2011')
+                      'PUG1714', 'PCT1466', 'PCT2011')

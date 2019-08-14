@@ -5,7 +5,7 @@ tide, current, and weather information, based on the users input.
 
 
 from datetime import datetime, timedelta
-from vp_data import wa_dist, wa_names
+from vp_data import wa_dist, wa_names, current_station_id
 from way_points import WayPoint, Voyage
 
 
@@ -68,9 +68,10 @@ waypoints = {name: WayPoint(name) for name in wa_names}
 count = 0
 for v in waypoints.values():
     v.distance = wa_dist[count]
-    count += 1
-
-count = 0
-for v in waypoints.values():
     v.station_id = current_station_id[count]
+    v.get_eta(s=PresentVoyage.cruise, d=PresentVoyage.departure)
+    v.get_current()
+    print('You will arrive at %s at %s. The current will be %s knots%s' % (
+        v.name, v.eta, v.current, v.current_direction))
+    count += 1
 
