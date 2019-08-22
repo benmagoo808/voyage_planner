@@ -28,7 +28,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/way_points.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-241">
+            <state relative-caret-position="25">
               <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
               <folding>
                 <element signature="e#78#118#0" expanded="true" />
@@ -40,7 +40,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/us_current_chart retrieval.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="263">
+            <state relative-caret-position="273">
               <caret line="92" column="13" lean-forward="true" selection-start-line="92" selection-start-column="13" selection-end-line="92" selection-end-column="13" />
               <folding>
                 <element signature="e#227#267#0" expanded="true" />
@@ -52,10 +52,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/canada_scraper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="82" column="10" selection-start-line="82" selection-start-column="10" selection-end-line="82" selection-end-column="10" />
+            <state relative-caret-position="455">
+              <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
               <folding>
-                <element signature="e#102#117#0" expanded="true" />
+                <element signature="e#510#525#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -518,7 +518,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566351906103</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Converted times in scraped data for canada to datetime format">
+      <created>1566425517019</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1566425517019</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TodoView">
@@ -611,7 +618,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Cleaned up some formatting and added comments" />
     <MESSAGE value="Converted Dictionary DistanceNB from named variables to zip from two lists" />
     <MESSAGE value="Cleaned up refactored code" />
     <MESSAGE value="Added validation loops to the input requests" />
@@ -636,7 +642,8 @@
     <MESSAGE value="Added README.md and LICENSE.md" />
     <MESSAGE value="Added file extension to readme and license" />
     <MESSAGE value="Successfully built script to scrape currents from enviornment Canada website. Now to convert to same format as US, adjust for daylight savings, write to csv" />
-    <option name="LAST_COMMIT_MESSAGE" value="Successfully built script to scrape currents from enviornment Canada website. Now to convert to same format as US, adjust for daylight savings, write to csv" />
+    <MESSAGE value="Converted times in scraped data for canada to datetime format" />
+    <option name="LAST_COMMIT_MESSAGE" value="Converted times in scraped data for canada to datetime format" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/NOAA Current Predictions - Current Predictions.html" />
@@ -734,16 +741,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/voyage_planner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1155">
-          <caret line="77" selection-start-line="77" selection-end-line="77" />
-          <folding>
-            <element signature="e#155#195#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LICENSE.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -794,9 +791,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/voyage_planner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1155">
+          <caret line="77" selection-start-line="77" selection-end-line="77" />
+          <folding>
+            <element signature="e#155#195#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/us_current_chart retrieval.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
+        <state relative-caret-position="273">
           <caret line="92" column="13" lean-forward="true" selection-start-line="92" selection-start-column="13" selection-end-line="92" selection-end-column="13" />
           <folding>
             <element signature="e#227#267#0" expanded="true" />
@@ -806,7 +813,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/way_points.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-241">
+        <state relative-caret-position="25">
           <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
           <folding>
             <element signature="e#78#118#0" expanded="true" />
@@ -816,10 +823,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/canada_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="82" column="10" selection-start-line="82" selection-start-column="10" selection-end-line="82" selection-end-column="10" />
+        <state relative-caret-position="455">
+          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
           <folding>
-            <element signature="e#102#117#0" expanded="true" />
+            <element signature="e#510#525#0" expanded="true" />
           </folding>
         </state>
       </provider>

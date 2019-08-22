@@ -12,7 +12,8 @@ convert to 24 hour, DST adjusted Pacific Standard Time
 
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
+import pytz
 import csv
 import re
 
@@ -55,14 +56,28 @@ def convert_date(day, mon, year):
     return formatted_date.date()
 
 
-# convert time to proper datetime format, adjusting for daylight savings
+""" convert_time needs modification. The canadian tide tables for this programs 
+purpose  are all in PST (UTC -8), confusingly listed as PST (Z+8) at the top 
+of the tables and in the print book. So, I'm cheating and adding 8 hours to 
+listed time, setting as UTC, then converting to local tz 'US/Pacific' to correct 
+for DST when applicable."""
+
+# convert time to datetime, correct for DST, combine with date
 def convert_time(date, time):
     time = datetime.strptime(time, '%I:%M %p')
     time = datetime.time(time)
-    formatted_time = datetime.combine(date, time)
+    table_time = datetime.combine(date, time)
+    print(table_time)
+    utc_time = table_time + timedelta(hours=8)
+    zone = pytz.timezone('US/Pacific')
+    formatted_time = utc_time.replace(tzinfo=pytz.utc).astimezone(zone)
+    print(formatted_time.strftime('%Y-%m-%d %H:%M'))
     return formatted_time
 
+
 # convert dates and times in monthly tables to datetime format
+local_tz = pytz.timezone('US/Pacific')
+
 for i in monthly_tables.keys():
     current_table = monthly_tables[i]
     for entry in current_table[:3]:
@@ -80,5 +95,5 @@ for i in monthly_tables.keys():
         else:
             continue
 
-# correct
+
 
